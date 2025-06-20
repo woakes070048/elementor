@@ -4,6 +4,7 @@ namespace Elementor\Modules\Variables\Storage;
 
 use Elementor\Core\Kits\Documents\Kit;
 use Elementor\Modules\AtomicWidgets\Utils;
+use Elementor\Modules\Variables\Classes\Variables;
 use Elementor\Modules\Variables\Storage\Exceptions\RecordNotFound;
 use Elementor\Modules\Variables\Storage\Exceptions\VariablesLimitReached;
 use Elementor\Modules\Variables\Storage\Exceptions\FatalError;
@@ -41,6 +42,12 @@ class Repository {
 		if ( self::TOTAL_VARIABLES_COUNT < $variables_in_use ) {
 			throw new VariablesLimitReached( 'Total variables count limit reached' );
 		}
+	}
+
+	public function variables(): array {
+		$db_record = $this->load();
+
+		return $db_record['data'] ?? [];
 	}
 
 	public function load(): array {
